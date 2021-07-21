@@ -158,7 +158,7 @@ export const SimpleModal = ({
             selected?.map((item) => {
               return (
                 <li className='choise-food'>
-                  {`${item} + приборы`}
+                  {item}
 
                   <select name={item}>
                     <option value="1">1</option>

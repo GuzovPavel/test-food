@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 
 import firebase from "firebase";
-const ListOrders = ({ user, info }) => {
+const ListOrders = () => {
   const [dataGrech, setDataGrech] = useState();
   const [dataAlex, setDataAlex] = useState();
   const [dataCheh, setDataCheh] = useState();
   const [dataPetr, setDataPetr] = useState();
-  const [sum, setSum] = useState();
   useEffect(() => {
     firebase
       .database()
@@ -116,17 +115,8 @@ const ListOrders = ({ user, info }) => {
             setDataPetr(arrayPetr2);
           });
       });
-    firebase
-      .database()
-      .ref(`orders/sum`)
-      .on("value", (snapshot) => {
-        const data = snapshot.val();
-        const flex = Object.keys(data).map((room) => {
-          return data[room];
-        });
-        setSum(flex);
-      });
-  }, [firebase]);
+    
+  }, []);
 
   return (
     <div style={{ marginTop: "120px", marginBottom: "120px" }}>

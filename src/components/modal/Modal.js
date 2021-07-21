@@ -59,7 +59,6 @@ export const SimpleModal = ({
   const [preOrder, setPreOrder] = useState();
   const [preSum, setPreSum] = useState();
   const [turn, isTurn] = useState();
-  const [key1, setKey] = useState();
   const [open, setOpen] = useState(false);
   const handleClose = (answer) => {
     setIsOpen(false);

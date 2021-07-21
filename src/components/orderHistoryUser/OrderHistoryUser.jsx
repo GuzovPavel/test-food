@@ -23,7 +23,6 @@ const useStyles = makeStyles({
 const OrderHistoryUser = () => {
   const classes = useStyles();
   const [data1, setData1] = useState();
-  const [test, setTest] = useState();
   const [total, setTotal] = useState();
   const [date, setDate] = useState(moment(new Date()).format("YYYY.MM.DD"));
   const [check, setCheck] = React.useState({
@@ -64,7 +63,7 @@ const OrderHistoryUser = () => {
           setTotal(reducer);
         }
       });
-  }, [firebase, date, check]);
+  }, [ date, check,data1,id]);
 
   const handleChange = (event) => {
     setCheck({ ...check, [event.target.name]: event.target.checked });

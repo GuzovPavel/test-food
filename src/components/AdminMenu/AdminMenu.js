@@ -184,7 +184,7 @@ export const AdminMenu = ({ user, data }) => {
           });
         setMenu(arr);
       });
-  }, [firebase]);
+  }, []);
   let arr2 = menu ? menu : [{ name: "1", price: "1" }];
   
 

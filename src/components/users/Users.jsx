@@ -8,7 +8,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import firebase from "firebase";
-import { useSelector, useDispatch } from "react-redux";
+import {  useDispatch } from "react-redux";
 import { setId } from "../../redux/actions/mainActions";
 import { Link } from "react-router-dom";
 const useStyles = makeStyles({
@@ -20,7 +20,6 @@ const Users = () => {
   const dispatch = useDispatch();
 
   const classes = useStyles();
-  const id = useSelector((state) => state.main.id);
   const [data1, setData] = useState();
   useEffect(() => {
     firebase

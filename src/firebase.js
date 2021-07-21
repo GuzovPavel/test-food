@@ -19,7 +19,7 @@ var firebaseConfig = {
   measurementId: "G-R852SDRZP5"
 };
 // Initialize Firebase
-const firebaseApp = firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 //connect to database
 const db = firebase.firestore();

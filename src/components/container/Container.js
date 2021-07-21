@@ -161,14 +161,14 @@ const EnhancedTableToolbar = (props) => {
         const data1 = snapshot.val();
         setDay(data1);
       });
-  }, [firebase]);
+  }, []);
   useEffect(() => {
     if (hour === 9 && min === 30) {
       let newTemplate = firebase.database().ref(`/block`);
       newTemplate.update({ i: false });
       return;
     }
-  }, []);
+  }, [hour,min]);
 
   return (
     <Toolbar
@@ -293,7 +293,7 @@ export const Container = ({ user, data }) => {
             isBlock(data.i);
           });
       });
-  }, [firebase, day]);
+  }, [ day]);
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
       const newSelecteds = arr2.map((n) => n.name);

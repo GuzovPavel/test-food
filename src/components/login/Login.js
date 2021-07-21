@@ -1,0 +1,99 @@
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import { Button } from "@material-ui/core";
+import CustomInput from "../customInput";
+import { auth } from "../../firebase";
+import { useHistory } from "react-router-dom";
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    position: "absolute",
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: "2px solid #000",
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+    transform: "translate(-50%, -50%)",
+    top: "50%",
+    left: "50%",
+  },
+}));
+
+export const Login = () => {
+  const history = useHistory();
+  const classes = useStyles();
+  const [email, setEmail] = useState("");
+  const [valid, setValid] = useState("");
+  const [password, setPassword] = useState("");
+
+  const signUp = (e) => {
+    e.preventDefault();
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then((user) => {
+        localStorage.setItem("token", user.user.refreshToken);
+        history.push("/");
+      })
+      .catch((error) => {
+        setValid(error.message);
+      });
+  };
+  const signOut = () => {
+    auth
+      .signOut()
+      .then(function (res) {
+        localStorage.removeItem("token");
+      })
+      .catch(function (error) {
+        // An error happened.
+      });
+  };
+
+  const body = (
+    <div className={classes.paper}>
+      <form
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+        className="form"
+      >
+        <CustomInput
+          labelText="Email"
+          value={email}
+          id="email"
+          formControlProps={{
+            fullWidth: true,
+          }}
+          handleChange={(e) => setEmail(e.target.value)}
+          type="text"
+        />
+
+        <CustomInput
+          labelText="Password"
+          id="password"
+          value={password}
+          formControlProps={{
+            fullWidth: true,
+          }}
+          handleChange={(e) => setPassword(e.target.value)}
+          type="password"
+        />
+        {valid && <span style={{ color: "red" }}>{valid}</span>}
+
+        <Button onClick={signUp} type="button" color="primary">
+          Log in
+        </Button>
+        <span onClick={signOut}>exit</span>
+      </form>
+    </div>
+  );
+
+  return (
+    <div>
+      <button type="button">Open Modal</button>
+
+      {body}
+    </div>
+  );
+};

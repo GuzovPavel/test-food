@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Otomanopee+One&display=swap');
+
+#header {
+display: flex;
+justify-content: space-around;
+align-items: center;
+width: 100%;
+box-shadow: 0 0px 15px 1px rgb(95, 11, 11);
+background-color: rgb(247, 190, 85);
+padding: 5px 0;
+height: 40px;
+}
+
+.head-button {
+  width: 100%;
+  height: 100%;
+  background-color: hsl(0, 0%, 0%);
+  border-radius: 5px;
+  border: none;
+  color: rgb(243, 115, 41);
+  font-family: 'Otomanopee One', sans-serif;
+  cursor: pointer;
+}
+
+a {
+  display: flex;
+  align-items: center;
+  width: 10%;
+  height: 100%;
+  text-decoration: none;
+}
+
+.log-out {
+  display: flex;
+  font-family: "Otomanopee One", sans-serif;
+  cursor: pointer;
+  border: 1px black solid;
+  border-radius: 5px;
+  width: 10%;
+  height: 100%;
+  align-items: center;
+  justify-content: space-around;
+}

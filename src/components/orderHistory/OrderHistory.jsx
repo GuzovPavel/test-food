@@ -2,6 +2,7 @@ import React from "react";
 import firebase from "firebase";
 import { useState, useEffect } from "react";
 import moment from "moment";
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import {
   Table,
   TableBody,
@@ -57,8 +58,8 @@ const OrderHistory = ({ user, data }) => {
             const reducer = !history?.filter((e) => e && e.date === date).length
               ? setTotal(0)
               : history?.filter((e) => e && e.date === date).length === 1
-              ? history?.filter((e) => e.date === date)[0].selectedPrice
-              : history
+                ? history?.filter((e) => e.date === date)[0].selectedPrice
+                : history
                   ?.filter((e) => e && e.date === date)
                   .reduce((prev, curr) => {
                     return prev + curr.selectedPrice;
@@ -66,7 +67,7 @@ const OrderHistory = ({ user, data }) => {
             setTotal(reducer);
           }
         });
-        //  eslint-disable-next-line react-hooks/exhaustive-deps
+    //  eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, date, check]);
   const handleChange = (event) => {
     setCheck({ ...check, [event.target.name]: event.target.checked });
@@ -107,7 +108,7 @@ const OrderHistory = ({ user, data }) => {
           />
         )}
         {check.checkedA ? (
-          <span  style={style}>История по дате</span>
+          <span style={style}>История по дате</span>
         ) : (
           <span style={style}>Вся история</span>
         )}
@@ -151,13 +152,12 @@ const OrderHistory = ({ user, data }) => {
                         <TableCell align="right">{e.selectedPrice}</TableCell>
                         <TableCell align="right">
                           {e.ind && e.id && (
-                            <span
+                            <DeleteForeverIcon
+                            style={{cursor: 'pointer'}}
                               onClick={() =>
                                 e.ind && e.id && handleDelete(e.ind, e.id)
                               }
-                            >
-                              Отмена
-                            </span>
+                            />
                           )}
                         </TableCell>
                       </TableRow>

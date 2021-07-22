@@ -30,7 +30,7 @@ const OrderHistoryUser = () => {
     checkedA: true,
   });
   const id = useSelector((state) => state.main.id);
-  const style = {
+  const style = { 
     fontSize: '23px',
     weight: '600px'
   }

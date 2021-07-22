@@ -63,7 +63,8 @@ const OrderHistoryUser = () => {
           setTotal(reducer);
         }
       });
-  }, [ date, check,data1,id]);
+              //  eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ date, check,id]);
 
   const handleChange = (event) => {
     setCheck({ ...check, [event.target.name]: event.target.checked });

@@ -164,10 +164,7 @@ export const SimpleModal = ({
           ) : (
             selected?.map((item) => (
               <li className='choise-food'>
-               {item}
-              <span>{cutleryCheck && cutlery}</span>
-             <span>{breadCheck && bread}</span>
-              
+               {item}             
 
               <select name={item}>
                 <option value="1">1</option>

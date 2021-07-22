@@ -1,6 +1,5 @@
 import "./App.scss";
 import Header from "./components/header";
-import Footer from "./components/footer";
 import Container from "./components/container";
 import firebase from "firebase";
 import Login from "./components/login";
@@ -112,7 +111,6 @@ function App() {
           <Route path="/login" component={Login}></Route>
           <Route path="/reg" component={Reg}></Route>
         </Switch>
-        <Footer />
       </div>
     </Router>
   );

@@ -16,8 +16,7 @@ function getModalStyle() {
   return {
     top: `${top}%`,
     left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-    backgroundColor: '#FFE741'
+    transform: `translate(-${top}%, -${left}%)`
   };
 }
 function Alert(props) {
@@ -29,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     width: 400,
     backgroundColor: theme.palette.background.paper,
-    // backgroundColor: 'aquamarine',
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
@@ -58,10 +56,12 @@ export const SimpleModal = ({
   const [modalStyle] = React.useState(getModalStyle);
   const [preOrder, setPreOrder] = useState();
   const [preSum, setPreSum] = useState();
-  const [turn, isTurn] = useState();
+  const [turn, isTurn] = useState();  
   const [open, setOpen] = useState(false);
-  const [check, setCheck] = useState(true);
-  const [bread, setBread] = useState(true)
+  const [cutleryCheck, setCutleryCheck] = useState(false);
+  const [cutlery, setCutlery] = useState('')
+  const [breadCheck, setBreadCheck] = useState(false);
+  const [bread, setBread] = useState('')
   const handleClose = (answer) => {
     setIsOpen(false);
   };
@@ -76,8 +76,9 @@ export const SimpleModal = ({
     for (let item in selected) {
       const a = form.get(selected[item]);
       for (let i = 0; i < a; i++) {
-        order.push(`${selected[item]} ${!check && 'без приборов'} ${!bread && 'без хлеба'}`);
-        sum.push(selectedPrice[item]);
+        order.push(`${selected[item]} ${cutlery} ${bread}`);
+        // order.push(`${selected[item]} ${bread}`);
+        sum.push(selectedPrice[item]);  
         console.log(order);
       }
       setPreOrder(order);
@@ -132,7 +133,7 @@ export const SimpleModal = ({
     let newTemplate = firebase.database().ref(`/orders/${data.office}`);
     await newTemplate.push(preOrder.map((item, index) => item)).then((data) => {
       let key = data.key;
-      console.log(key, "0000000000");
+      // console.log(key, "0000000000");
       test(key);
     });
 
@@ -164,8 +165,8 @@ export const SimpleModal = ({
             selected?.map((item) => (
               <li className='choise-food'>
                {item}
-               <span>{!check && 'без приборов'}</span>
-               <span> {!bread && 'без хлеба'}</span>
+              <span>{cutleryCheck && cutlery}</span>
+             <span>{breadCheck && bread}</span>
               
 
               <select name={item}>
@@ -183,8 +184,8 @@ export const SimpleModal = ({
           )}
         </ul>
         <div className='switch-button'>
-        <SwitchBox check={check} setCheck={setCheck} /> 
-        <Bread bread={bread} setBread={setBread} />
+        <SwitchBox cutleryCheck={cutleryCheck} setCutleryCheck={setCutleryCheck} setCutlery={setCutlery} /> 
+        <Bread breadCheck={breadCheck} setBreadCheck={setBreadCheck} bread={bread} setBread={setBread} />
         </div>
 
         <footer className={classes.footer}>

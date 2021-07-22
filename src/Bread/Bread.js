@@ -1,19 +1,24 @@
+  import { Checkbox } from '@material-ui/core';
 import React from 'react';
 import './Bread.scss'
 
-const Bread = ({ bread, setBread }) => {
+const Bread = ({ breadCheck, setBreadCheck , setBread }) => {
 
 
   const handleChange = () => {
-    setBread(!bread);
+    setBreadCheck(!breadCheck);
+    if (!breadCheck) {
+      setBread('без хлеба')
+    } else {
+      setBread('')
+    }
 
   };
 
   return (
-    <div className='bread'>
-      <button className="choise-check" onClick={handleChange}>
-      without bread
-      </button>
+    <div>
+      <span>Убрать хлеб</span>
+    <Checkbox onChange={handleChange}/>
     </div>
   );
 }

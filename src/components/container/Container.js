@@ -337,8 +337,8 @@ export const Container = ({ user, data }) => {
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   return (
-    // <div className={classes.root}>
-      <div className='menu-block'>
+    <div className={classes.root}>
+
       {data && data.admin === true && (
         <div>
           <h2 className='main-menu'>Меню</h2>

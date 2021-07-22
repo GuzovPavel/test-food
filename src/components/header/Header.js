@@ -16,15 +16,15 @@ export const Header = ({ user, data }) => {
   };
   return (
     <div id="header">
-      <Link to="/"><button className='head-button'>home</button></Link>
+      <Link to="/">home</Link>
       {localStorage.getItem("token") && (
-        <Link to="/orders-history"><button className='head-button'>Orders History</button></Link>
+        <Link to="/orders-history">Orders History</Link>
       )}
-      {!user && <Link to="/reg"><button className='head-button'>register</button></Link>}
+      {!user && <Link to="/reg">register</Link>}
       {!user && <Link to="/login">log in</Link>}
-      {data && data.admin === true && <Link to="/admin-menu"><button className='head-button'>admin menu</button></Link>}
-      {data && data.admin === true && <Link to="/orders"><button className='head-button'>orders</button></Link>}
-      {data && data.admin === true && <Link to="/users"><button className='head-button'>Users</button></Link>}
+      {data && data.admin === true && <Link to="/admin-menu">admin menu</Link>}
+      {data && data.admin === true && <Link to="/orders">Orders</Link>}
+      {data && data.admin === true && <Link to="/users">Users</Link>}
       {user && (
         <span className='log-out'
           onClick={() => {

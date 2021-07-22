@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
-// import Drawer from '@material-ui/core/Drawer';
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import Divider from '@material-ui/core/Divider';
+import { 
+  makeStyles,
+  Drawer,
+  Divider,
+} from '@material-ui/core/';
 import MenuIcon from '@material-ui/icons/Menu';
 import Header from '../header';
-import { Button } from '@material-ui/core';
-// import { auth } from "../../firebase";
+
 
 const useStyles = makeStyles({
   list: {
@@ -23,7 +23,7 @@ export default function TemporaryDrawer({ user, data }) {
   const [state, setState] = useState({
     top: false
   });
-
+  console.log(state.top)
   const toggleDrawer = (anchor, open) => (event) => {
     if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
@@ -49,19 +49,10 @@ export default function TemporaryDrawer({ user, data }) {
     <div>
       {['top'].map((anchor) => (
         <React.Fragment key={anchor}>
-                   <Button onClick={toggleDrawer(anchor, true)}><MenuIcon/></Button>
-
-          {/* <MenuIcon onClick={toggleDrawer(anchor, true)}>{anchor} </MenuIcon> */}
-            {/* <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
+          <MenuIcon onClick={toggleDrawer(anchor, true)}>{anchor} </MenuIcon>
+            <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
               {list(anchor)}
-            </Drawer> */}
-           <SwipeableDrawer
-           anchor={anchor}
-           open={state[anchor]}
-           onClose={toggleDrawer(anchor, false)}
-           onOpen={toggleDrawer(anchor, true)}>
-          {list(anchor)}
-          </SwipeableDrawer>
+            </Drawer>
         </React.Fragment>
       ))}
     </div>

@@ -32,7 +32,8 @@ const OrderHistoryUser = () => {
   const id = useSelector((state) => state.main.id);
   const style = { 
     fontSize: '23px',
-    weight: '600px'
+    fontWeight: 600,
+    margin:'15px 0'
   }
 
   useEffect(() => {

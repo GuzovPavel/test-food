@@ -32,7 +32,8 @@ const OrderHistory = ({ user, data }) => {
   });
   const style = {
     fontSize: '23px',
-    weight: '600px'
+    fontWeight: 600,
+    margin:'15px 0'
   }
   useEffect(() => {
     user &&

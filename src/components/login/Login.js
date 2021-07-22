@@ -91,8 +91,6 @@ export const Login = () => {
 
   return (
     <div>
-      <button type="button">Open Modal</button>
-
       {body}
     </div>
   );

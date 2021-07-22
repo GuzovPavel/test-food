@@ -7,6 +7,7 @@ import MuiAlert from "@material-ui/lab/Alert";
 import Snackbar from "@material-ui/core/Snackbar";
 import "./modal.scss"
 import SwitchBox from "../SwitchBox/SwitchBox";
+import Bread from "../../Bread/Bread";
 
 function getModalStyle() {
   const top = 50;
@@ -16,6 +17,7 @@ function getModalStyle() {
     top: `${top}%`,
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
+    backgroundColor: '#FFE741'
   };
 }
 function Alert(props) {
@@ -26,8 +28,8 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     position: "absolute",
     width: 400,
-    // backgroundColor: theme.palette.background.paper,
-    backgroundColor: 'aquamarine',
+    backgroundColor: theme.palette.background.paper,
+    // backgroundColor: 'aquamarine',
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
@@ -38,11 +40,9 @@ const useStyles = makeStyles((theme) => ({
     margin: "20px 0 0",
   },
   ulStyles: {
-    // backgroundColor: 'aquamarine',
     paddingLeft: 0,
     overflow: "auto",
     maxHeight: 300,
-    // border: '1px black solid'
   },
 }));
 
@@ -60,9 +60,12 @@ export const SimpleModal = ({
   const [preSum, setPreSum] = useState();
   const [turn, isTurn] = useState();
   const [open, setOpen] = useState(false);
+  const [check, setCheck] = useState(true);
+  const [bread, setBread] = useState(true)
   const handleClose = (answer) => {
     setIsOpen(false);
   };
+
 
   const save = (e) => {
     e.preventDefault();
@@ -73,12 +76,15 @@ export const SimpleModal = ({
     for (let item in selected) {
       const a = form.get(selected[item]);
       for (let i = 0; i < a; i++) {
-        order.push(selected[item]);
+        order.push(`${selected[item]} ${!check && 'без приборов'} ${!bread && 'без хлеба'}`);
         sum.push(selectedPrice[item]);
+        console.log(order);
       }
       setPreOrder(order);
       setPreSum(sum);
     }
+
+ 
     // let newTemplate = firebase.database().ref(`/orders/${data.office}`);
     // newTemplate.push(order.map((item, index) => item));
     // var date = new Date();
@@ -146,7 +152,7 @@ export const SimpleModal = ({
 
     setOpen(false);
   };
-  console.log(selected)
+
   const body = (
     <form onSubmit={(e) => save(e)}>
       <div style={modalStyle} className={classes.paper}>
@@ -155,25 +161,31 @@ export const SimpleModal = ({
           {!selected.length ? (
             <li>НИЧЕГО</li>
           ) : (
-            selected?.map((item) => {
-              return (
-                <li className='choise-food'>
-                  {item}
+            selected?.map((item) => (
+              <li className='choise-food'>
+               {item}
+               <span>{!check && 'без приборов'}</span>
+               <span> {!bread && 'без хлеба'}</span>
+              
 
-                  <select name={item}>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                  </select>
-                </li>
-              );
-            })
+              <select name={item}>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+              </select>
+            </li>
+        
+            )
+            )
           )}
         </ul>
-        <SwitchBox />
+        <div className='switch-button'>
+        <SwitchBox check={check} setCheck={setCheck} /> 
+        <Bread bread={bread} setBread={setBread} />
+        </div>
 
         <footer className={classes.footer}>
           <Button type="submit" variant="contained" color="primary">

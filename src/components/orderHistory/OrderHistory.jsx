@@ -72,7 +72,7 @@ const OrderHistory = ({ user, data }) => {
     firebase.database().ref(`/orders/${data.office}/${id}`).remove();
     firebase.database().ref(`/orders/history/${user.uid}/${ind}`).remove();
   };
-  console.log(data, "22222");
+  // console.log(data, "22222");
   return (
     <div style={{ marginTop: "120px" }}>
       <h2>Total:{total} руб</h2>

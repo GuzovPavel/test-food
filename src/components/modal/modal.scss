@@ -1,6 +1,16 @@
 .choise-food {
+    margin-top: 1%;
     display: flex;
     justify-content: space-between;
-    background-color: rgb(122, 209, 221);
+    background-color: #FFA241;
     padding: 5px;
+    border-radius: 5px;
+    height: 20px;
+}
+
+.switch-button {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    width: 100%;
 }

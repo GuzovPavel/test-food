@@ -13,7 +13,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import moment from "moment";
 import Switch from "@material-ui/core/Switch";
-
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
@@ -39,9 +38,7 @@ const OrderHistory = ({ user, data }) => {
             Object.keys(data).map((room) => {
               return data[room];
             });
-
           setData1(history);
-
           if (!check.checkedA) {
             const reducer2 =
               data1 &&
@@ -62,8 +59,8 @@ const OrderHistory = ({ user, data }) => {
             setTotal(reducer);
           }
         });
-  }, [ user, date, check,data1]);
-
+        //  eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, date, check]);
   const handleChange = (event) => {
     setCheck({ ...check, [event.target.name]: event.target.checked });
   };
@@ -89,7 +86,6 @@ const OrderHistory = ({ user, data }) => {
           name="checkedA"
           inputProps={{ "aria-label": "secondary checkbox" }}
         />
-
         {check.checkedA && (
           <TextField
             id="date"
@@ -109,7 +105,6 @@ const OrderHistory = ({ user, data }) => {
           <span>Вся история</span>
         )}
       </div>
-
       <TableContainer component={Paper}>
         <Table
           className={classes.table}
@@ -202,5 +197,4 @@ const OrderHistory = ({ user, data }) => {
     </div>
   );
 };
-
 export default OrderHistory;

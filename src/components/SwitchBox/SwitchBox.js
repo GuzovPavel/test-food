@@ -1,32 +1,25 @@
-import React, { useState } from 'react';
-import Switch from '@material-ui/core/Switch';
+import { Checkbox } from '@material-ui/core';
+import React from 'react';
 import './SwitchBox.scss'
 
-const SwitchBox = () => {
-  const [check, setCheck] = useState({
-    checkedA: true,
-    checkedB: false,
-  });
+const SwitchBox = ({ cutleryCheck, setCutleryCheck, setCutlery,  }) => {
 
-  const handleChange = (event) => {
-    setCheck({ ...check, [event.target.name]: event.target.checked });
+  const handleChange = () => {
+    setCutleryCheck(!cutleryCheck);
+    if (!cutleryCheck) {
+      setCutlery('без приборов')
+    } else {
+      setCutlery('') 
+    }
+
   };
-
   return (
-    <div className='cutlery'>
-        <p>Приборы</p>
-        <div>
-        <span>Не нужны</span>
-      <Switch
-        checked={check.checkedA}
-        onChange={handleChange}
-        name="checkedA"
-        inputProps={{ 'aria-label': 'secondary checkbox' }}
-      />
-        <span>Нужны</span>
-        </div>
-    </div>
-  );
+    <div>
+    <span>Убрать приборы</span>
+  <Checkbox onChange={handleChange}/>
+  </div>
+  )
+
 }
 
 export default SwitchBox;

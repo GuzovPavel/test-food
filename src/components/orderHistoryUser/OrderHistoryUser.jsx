@@ -1,19 +1,20 @@
 import React from "react";
 import firebase from "firebase";
-import { useState } from "react";
-import { useEffect } from "react";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
-import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
-import moment from "moment";
-import Switch from "@material-ui/core/Switch";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import moment from "moment";
+import {
+  makeStyles,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  TextField,
+  Switch
+} from "@material-ui/core";
 
 const useStyles = makeStyles({
   table: {
@@ -29,6 +30,11 @@ const OrderHistoryUser = () => {
     checkedA: true,
   });
   const id = useSelector((state) => state.main.id);
+  const style = {
+    fontSize: '23px',
+    weight: '600px'
+  }
+
   useEffect(() => {
     firebase
       .database()
@@ -54,8 +60,8 @@ const OrderHistoryUser = () => {
           const reducer = !history?.filter((e) => e && e.date === date).length
             ? setTotal(0)
             : history?.filter((e) => e && e.date === date).length === 1
-            ? history?.filter((e) => e.date === date)[0].selectedPrice
-            : history
+              ? history?.filter((e) => e.date === date)[0].selectedPrice
+              : history
                 ?.filter((e) => e && e.date === date)
                 .reduce((prev, curr) => {
                   return prev + curr.selectedPrice;
@@ -63,8 +69,8 @@ const OrderHistoryUser = () => {
           setTotal(reducer);
         }
       });
-              //  eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ date, check,id]);
+    //  eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [date, check, id]);
 
   const handleChange = (event) => {
     setCheck({ ...check, [event.target.name]: event.target.checked });
@@ -100,9 +106,9 @@ const OrderHistoryUser = () => {
           />
         )}
         {check.checkedA ? (
-          <span>История по дате</span>
+          <span style={style}>История по дате</span>
         ) : (
-          <span>Вся история</span>
+          <span style={style}>Вся история</span>
         )}
       </div>
 

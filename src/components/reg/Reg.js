@@ -134,8 +134,6 @@ export const Reg = () => {
 
   return (
     <div>
-      <button type="button">Open Modal</button>
-
       {body}
     </div>
   );

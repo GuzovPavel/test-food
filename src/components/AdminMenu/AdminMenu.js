@@ -56,6 +56,7 @@ const headCells = [
   { id: "img", numeric: false, disablePadding: false, label: "Фото" },
 
   { id: "price", numeric: true, disablePadding: false, label: "Цена(р)" },
+  {label: 'удаление'}
 ];
 
 function EnhancedTableHead(props) {
@@ -158,15 +159,15 @@ export const AdminMenu = ({ user, data }) => {
     setOrderBy(property);
   };
   const [menu, setMenu] = useState();
-  const [change, setChange] = useState();
-  const [changeC, setChangeC] = useState();
-  const [changeP, setChangeP] = useState();
-  const [changeG, setChangeG] = useState();
   const [open, setOpen] = useState(false);
   const [price, setPrice] = useState();
   const [name, setName] = useState();
   const [cal, setCal] = useState();
   const [gr, setGr] = useState();
+  const [change, setChange] = useState();
+  const [changeC, setChangeC] = useState();
+  const [changeP, setChangeP] = useState();
+  const [changeG, setChangeG] = useState();
   const [imageAsFile, setImageAsFile] = useState("");
 
   useEffect(() => {
@@ -201,6 +202,7 @@ export const AdminMenu = ({ user, data }) => {
     }
     setSelected([]);
   };
+
   const onClickAdd = () => {
     name &&
       price &&
@@ -301,6 +303,7 @@ export const AdminMenu = ({ user, data }) => {
       );
     }
   };
+
   return (
     <div style={{ marginTop: "100px" }} className={classes.root}>
       <ModalAdmin
@@ -332,7 +335,6 @@ export const AdminMenu = ({ user, data }) => {
                 (row, index) => {
                   const isItemSelected = isSelected(row.name);
                   const labelId = `enhanced-table-checkbox-${index}`;
-
                   return (
                     <TableRow
                       hover
@@ -364,7 +366,7 @@ export const AdminMenu = ({ user, data }) => {
                         scope="row"
                         padding="none"
                       >
-                        {row.name}
+                        {!row.editName && row.name}
                         <span
                           style={{ color: "green", cursor: "pointer" }}
                           onClick={() => {
@@ -374,6 +376,7 @@ export const AdminMenu = ({ user, data }) => {
                               .update({
                                 editName: true,
                               });
+                            setChange(row.name);
                           }}
                         >
                           {!row.editName && " edit"}
@@ -391,6 +394,7 @@ export const AdminMenu = ({ user, data }) => {
                                 cursor: "pointer",
                               }}
                               onClick={() => {
+                                change &&
                                 firebase
                                   .database()
                                   .ref(`/allmenu/${row.id}`)
@@ -425,7 +429,7 @@ export const AdminMenu = ({ user, data }) => {
                         )}
                       </TableCell>
                       <TableCell align="right">
-                        {row.gr}
+                        {!row.editGr && row.gr}
                         <span
                           style={{ color: "green", cursor: "pointer" }}
                           onClick={() => {
@@ -435,6 +439,7 @@ export const AdminMenu = ({ user, data }) => {
                               .update({
                                 editGr: true,
                               });
+                              setChangeG(row.gr)
                           }}
                         >
                           {!row.editGr && " edit"}
@@ -452,6 +457,7 @@ export const AdminMenu = ({ user, data }) => {
                                 cursor: "pointer",
                               }}
                               onClick={() => {
+                                changeG &&
                                 firebase
                                   .database()
                                   .ref(`/allmenu/${row.id}`)
@@ -487,7 +493,7 @@ export const AdminMenu = ({ user, data }) => {
                       </TableCell>
 
                       <TableCell align="right">
-                        {row.cal}
+                        {!row.editCal && row.cal}
                         <span
                           style={{ color: "green", cursor: "pointer" }}
                           onClick={() => {
@@ -497,6 +503,7 @@ export const AdminMenu = ({ user, data }) => {
                               .update({
                                 editCal: true,
                               });
+                              setChangeC(row.cal)
                           }}
                         >
                           {!row.editCal && " edit"}
@@ -514,6 +521,7 @@ export const AdminMenu = ({ user, data }) => {
                                 cursor: "pointer",
                               }}
                               onClick={() => {
+                                changeC &&
                                 firebase
                                   .database()
                                   .ref(`/allmenu/${row.id}`)
@@ -569,7 +577,8 @@ export const AdminMenu = ({ user, data }) => {
                         </div>
                       </TableCell>
                       <TableCell align="right">
-                        {row.price}
+                        <div style={{display:"flex", flexDirection:"column", alignItems:"flex-start"}}>
+                        {!row.editPrice && row.price}
                         <span
                           style={{ color: "green", cursor: "pointer" }}
                           onClick={() => {
@@ -579,6 +588,7 @@ export const AdminMenu = ({ user, data }) => {
                               .update({
                                 editPrice: true,
                               });
+                              setChangeP(row.price)
                           }}
                         >
                           {!row.editPrice && " edit"}
@@ -598,6 +608,7 @@ export const AdminMenu = ({ user, data }) => {
                                 cursor: "pointer",
                               }}
                               onClick={() => {
+                                changeP &&
                                 firebase
                                   .database()
                                   .ref(`/allmenu/${row.id}`)
@@ -630,6 +641,17 @@ export const AdminMenu = ({ user, data }) => {
                             </span>
                           </>
                         )}
+                        </div>
+                      </TableCell>
+                      <TableCell align="right">
+                        <span style={{color: "red", cursor: 'pointer'}}
+                         onClick={() => {
+                          let key = row.id
+                           firebase
+                           .database()
+                           .ref(`/allmenu/${key}`)
+                           .remove();
+                        }}>del</span>
                       </TableCell>
                     </TableRow>
                   );

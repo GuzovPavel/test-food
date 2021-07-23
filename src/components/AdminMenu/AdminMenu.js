@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import {  makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import {
   Table,
   Checkbox,
@@ -16,9 +16,7 @@ import {
 import ModalAdmin from "../modalAdmin";
 import firebase from "firebase";
 import { storage } from "../../firebase";
-
-
-
+import AddProduct from "../AddProduct.js/AddProduct";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -121,7 +119,6 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -165,12 +162,13 @@ export const AdminMenu = ({ user, data }) => {
   const [changeC, setChangeC] = useState();
   const [changeP, setChangeP] = useState();
   const [changeG, setChangeG] = useState();
-  const [add, setAdd] = useState();
+  const [open, setOpen] = useState(false);
   const [price, setPrice] = useState();
   const [name, setName] = useState();
   const [cal, setCal] = useState();
   const [gr, setGr] = useState();
   const [imageAsFile, setImageAsFile] = useState("");
+
   useEffect(() => {
     firebase
       .database()
@@ -186,7 +184,6 @@ export const AdminMenu = ({ user, data }) => {
       });
   }, []);
   let arr2 = menu ? menu : [{ name: "1", price: "1" }];
-  
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
@@ -203,6 +200,47 @@ export const AdminMenu = ({ user, data }) => {
       return;
     }
     setSelected([]);
+  };
+  const onClickAdd = () => {
+    name &&
+      price &&
+      firebase
+        .database()
+        .ref(`/allmenu`)
+        .push({
+          // id: Math.random().toString(36).substr(2, 9),
+          name: name,
+          price: parseInt(price),
+          gr: parseInt(gr),
+          cal: parseInt(cal),
+          edit: false,
+        })
+        .then((data) => {
+          setGr("");
+          setCal("");
+          setPrice("");
+          setName("");
+
+          let key = data.key;
+          firebase.database().ref(`/allmenu/${key}`).update({
+            id: key,
+          });
+        });
+    setOpen(false);
+  };
+
+  const params = {
+    name: name,
+    setName: setName,
+    gr: gr,
+    setGr: setGr,
+    cal: cal,
+    setCal: setCal,
+    price: price,
+    setPrice: setPrice,
+    onClickAdd: onClickAdd,
+    open: open,
+    setOpen: setOpen,
   };
 
   const handleClick = (event, name, price, cal, img, gr) => {
@@ -245,8 +283,7 @@ export const AdminMenu = ({ user, data }) => {
         .put(imageAsFile);
       uploadTask.on(
         "state_changed",
-        (snapShot) => {
-        },
+        (snapShot) => {},
         (err) => {
           console.log(err);
         },
@@ -601,104 +638,7 @@ export const AdminMenu = ({ user, data }) => {
             </TableBody>
           </Table>
         </TableContainer>
-        <div>
-          {!add && (
-            <span
-              style={{ fontSize: "50px", cursor: "pointer" }}
-              onClick={() => {
-                setAdd(true);
-              }}
-            >
-              +
-            </span>
-          )}
-
-          {add && (
-            <div
-              style={{
-                margin: "0 auto",
-                display: "flex",
-                flexDirection: "column",
-                width: 200,
-              }}
-            >
-              <label>Название продукта</label>
-              <input
-                style={{ margin: "10px 0px" }}
-                value={name}
-                onChange={(e) => {
-                  setName(e.target.value);
-                }}
-              ></input>
-              <label>Грамм</label>
-              <input
-                style={{ margin: "10px 0px" }}
-                value={gr}
-                onChange={(e) => {
-                  setGr(e.target.value);
-                }}
-              ></input>
-              <label>ккал</label>
-              <input
-                style={{ margin: "10px 0px" }}
-                value={cal}
-                onChange={(e) => {
-                  setCal(e.target.value);
-                }}
-              ></input>
-              <label>Цена .руб</label>
-              <input
-                value={price}
-                onChange={(e) => {
-                  setPrice(e.target.value);
-                }}
-              ></input>
-              <span
-                style={{ color: "green", marginLeft: "5px", cursor: "pointer" }}
-                onClick={() => {
-                  name &&
-                    price &&
-                    firebase
-                      .database()
-                      .ref(`/allmenu`)
-                      .push({
-                        // id: Math.random().toString(36).substr(2, 9),
-                        name: name,
-                        price: parseInt(price),
-                        gr: parseInt(gr),
-                        cal: parseInt(cal),
-                        edit: false,
-                      })
-                      .then((data) => {
-                        setGr("");
-                        setCal("");
-                        setPrice("");
-                        setName("");
-
-                        let key = data.key;
-                        firebase.database().ref(`/allmenu/${key}`).update({
-                          id: key,
-                        });
-                      });
-                }}
-              >
-                Add
-              </span>
-              <span
-                onClick={() => {
-                  setAdd(false);
-                  setPrice("");
-                  setName("");
-                  setGr("");
-                  setCal("");
-                }}
-                style={{ color: "red", cursor: "pointer" }}
-              >
-                Cancel
-              </span>
-            </div>
-          )}
-        </div>
+        <AddProduct {...params} />
       </Paper>
       <Button
         onClick={() => {
